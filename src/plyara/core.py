@@ -28,6 +28,7 @@ import ply.lex as lex
 import ply.yacc as yacc
 
 from plyara.exceptions import ParseTypeError, ParseValueError
+from plyara.types import YaraRule
 
 # Initialize the logger
 logger = logging.getLogger(__name__)
@@ -136,7 +137,8 @@ class Parser:
 
     FUNCTION_KEYWORDS = {'uint8', 'uint16', 'uint32', 'uint8be', 'uint16be', 'uint32be'}
 
-    def __init__(self, store_raw_sections=True, meta_as_kv=False, import_effects=False, testmode=False):
+    def __init__(self, store_raw_sections: bool = True, meta_as_kv: bool = False,
+                 import_effects: bool = False, testmode: bool = False) -> None:
         """Initialize the parser object.
 
         Args:
@@ -184,7 +186,7 @@ class Parser:
         if testmode:
             self._comment_record = list()
 
-    def clear(self):
+    def clear(self) -> None:
         """Clear all information about previously parsed rules."""
         self.rules.clear()
 
@@ -330,14 +332,14 @@ class Parser:
 
         return list(used_imports)
 
-    def parse_string(self, input_string):
+    def parse_string(self, input_string: str) -> list[YaraRule]:
         """Take a string input expected to consist of YARA rules, and return list of dictionaries representing them.
 
         Args:
             input_string: String input expected to consist of YARA rules.
 
         Returns:
-            dict: All the parsed components of a YARA rule.
+            list[YaraRule]: All the parsed components of a YARA rule.
         """
         self._raw_input = input_string
         self.parser.parse(input_string, lexer=self.lexer)

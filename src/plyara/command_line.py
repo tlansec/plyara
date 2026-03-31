@@ -25,7 +25,7 @@ import sys
 import plyara.core
 
 
-def _set_logging():
+def _set_logging() -> None:
     """Set the console logger."""
     logger = logging.getLogger('plyara')
     logger.setLevel(logging.DEBUG)
@@ -34,7 +34,7 @@ def _set_logging():
     logger.addHandler(sh)
 
 
-def main():
+def main() -> None:
     """Run the command line process to parse a yara rule file and output pretty printed JSON."""
     parser = argparse.ArgumentParser(description='Parse YARA rules into a JSON representation.')
     parser.add_argument('file', metavar='FILE', help='File containing YARA rules to parse.')

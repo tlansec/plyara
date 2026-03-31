@@ -38,6 +38,9 @@ plyara = "plyara.command_line:main"
 [project.optional-dependencies]
 tests = ['pycodestyle', 'pydocstyle', 'pyflakes', 'coverage']
 
+[tool.setuptools.package-data]
+plyara = ["py.typed"]
+
 [tool.pycodestyle]
 max-line-length = 120
 

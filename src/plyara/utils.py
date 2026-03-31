@@ -22,12 +22,13 @@ import re
 import warnings
 
 from plyara.core import Parser
+from plyara.types import YaraRule
 
 # Initialize the logger
 logger = logging.getLogger(__name__)
 
 
-def is_valid_rule_name(entry):
+def is_valid_rule_name(entry: str) -> bool:
     """Check to see if entry is a valid rule name.
 
     Args:
@@ -63,7 +64,7 @@ def is_valid_rule_name(entry):
     return True
 
 
-def is_valid_rule_tag(entry):
+def is_valid_rule_tag(entry: str) -> bool:
     """Check to see if entry is a valid rule tag.
 
     Args:
@@ -80,7 +81,7 @@ def is_valid_rule_tag(entry):
     return is_valid_rule_name(entry)
 
 
-def detect_imports(rule):
+def detect_imports(rule: YaraRule) -> list[str]:
     """Take a parsed yararule and provide a list of required imports based on condition.
 
     Args:
@@ -107,7 +108,7 @@ def detect_imports(rule):
     return detected_imports
 
 
-def detect_dependencies(rule):
+def detect_dependencies(rule: YaraRule) -> list[str]:
     """Take a parsed yararule and provide a list of external rule dependencies.
 
     Args:
@@ -183,7 +184,7 @@ def detect_dependencies(rule):
     return dependencies
 
 
-def generate_hash(rule, legacy=False):
+def generate_hash(rule: YaraRule, legacy: bool = False) -> str:
     """Calculate a secure hash of the logic in the rule strings and condition.
 
     If the resultant hashes are identical for two YARA rules, the rules will match on identical content.
@@ -305,7 +306,7 @@ def generate_hash(rule, legacy=False):
     return hexdigest
 
 
-def rebuild_yara_rule(rule, condition_indents=False):
+def rebuild_yara_rule(rule: YaraRule, condition_indents: bool = False) -> str:
     """Take a parsed yararule and rebuild it into a usable one.
 
     Args:
